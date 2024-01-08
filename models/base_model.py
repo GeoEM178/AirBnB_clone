@@ -6,6 +6,7 @@ This is the "base model" module.
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
     """BaseModel is a base for all the classes - will be inherited
 
@@ -32,9 +33,9 @@ class BaseModel:
         date_formatter = "%Y-%m-%dT%H:%M:%S.%f"
 
         if not kwargs:
-          self.id = str(uuid.uuid4())
-          self.created_at = datetime.utcnow()
-          self.updated_at = datetime.utcnow()
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
         if kwargs:
             for key, value in kwargs.items():
@@ -43,8 +44,6 @@ class BaseModel:
                 if key == "created_at" or key == "updated_at":
                     value = datetime.strptime(value, date_formatter)
                 setattr(self, key, value)
-            
-
 
     def save(self):
         """
@@ -55,7 +54,7 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Method returns a dictionary with all 
+        Method returns a dictionary with all
         keys and values of the __dict__
         """
         instance_dictionary = self.__dict__.copy()
@@ -63,15 +62,16 @@ class BaseModel:
         instance_dictionary['created_at'] = self.created_at.isoformat()
         instance_dictionary['updated_at'] = self.updated_at.isoformat()
         return instance_dictionary
-    
+
     def __str__(self):
         """
         Returns string representation of the class and instance
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                self.id, self.__dict__)
 
-    
 # TODO: For testing - will be deleted
+
 
 my_model = BaseModel()
 my_model.name = "My First Model"
