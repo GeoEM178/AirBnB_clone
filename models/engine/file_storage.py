@@ -40,8 +40,20 @@ class FileStorage:
         for object in all_objects.keys():
             objects_dictionary[object] = all_objects[object].to_dict()
 
-        with open(FileStorage.__file_path, "a") as f:
-            json.dump(objects_dictionary, f)
+        # Read existing JSON data from the file
+        existing_data = {}
+        if os.path.exists(FileStorage.__file_path):
+            with open(FileStorage.__file_path, 'r') as f:
+                try:
+                    existing_data = json.load(f)
+                except Exception:
+                    pass
+
+        # Update the existing data with new objects
+        existing_data.update(objects_dictionary)
+
+        with open(FileStorage.__file_path, "w") as f:
+            json.dump(existing_data, f)
 
     def reload(self):
         if os.path.exists(FileStorage.__file_path):
