@@ -40,7 +40,7 @@ class FileStorage:
         for object in all_objects.keys():
             objects_dictionary[object] = all_objects[object].to_dict()
 
-        with open(FileStorage.__file_path, "w+") as f:
+        with open(FileStorage.__file_path, "a") as f:
             json.dump(objects_dictionary, f)
 
     def reload(self):
