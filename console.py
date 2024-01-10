@@ -145,10 +145,10 @@ class HBNBCommand(cmd.Cmd):
 
                 try:
                     attr_value = eval(attr_value)
-                    setattr(updated_obj, attr_key, attr_value)
-                    updated_obj.save()
                 except Exception:
                     pass
+                setattr(updated_obj, attr_key, attr_value)
+                updated_obj.save()
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
