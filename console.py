@@ -55,7 +55,10 @@ class HBNBCommand(cmd.Cmd):
         elif command_args[0] not in self.existing_class:
             print("** class doesn't exist **")
         else:
-            created_instance = eval(f"{command_args[0]}()")
+            try:
+                created_instance = eval(f"{command_args[0]}()")
+            except Exception:
+                pass
 
             storage.save()
             print(created_instance.id)
@@ -158,6 +161,25 @@ class HBNBCommand(cmd.Cmd):
                 setattr(updated_obj, attr_key, attr_value)
                 updated_obj.save()
 
+    def do_count(self, args):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
+        """
+        command_args = shlex.split(args)
+        if len(command_args) == 0:
+            print("** class name missing **")
+        elif command_args[0] not in self.existing_class:
+            print("** class doesn't exist **")
+        else:
+            all_objects = storage.all()
+            count = 0
+            for key, value in all_objects.items():
+                if key.split('.')[0] == command_args[0]:
+                    count += 1
+            print(count)
+
     def default(self, args):
         """_summary_
 
@@ -168,13 +190,13 @@ class HBNBCommand(cmd.Cmd):
             _type_: _description_
         """
         arguments = args.split('.')
-        cmd_class_name = arguments[0]
+        class_name = arguments[0]
 
         cmd_fun = arguments[1].split('(')
         cmd_fun_name = cmd_fun[0]
 
-        if cmd_fun[1] != ")":
-            return print(f"*** Unknown syntax: {args}")
+        param = cmd_fun[1].split(')')[0]
+        splitted_params= param.split(',')
 
         cmd_fun_dict = {
             'all': self.do_all,
@@ -182,13 +204,21 @@ class HBNBCommand(cmd.Cmd):
             'destroy': self.do_destroy,
             'update': self.do_update,
             'create': self.do_create,
-            # 'count': self.do_count,
+            'count': self.do_count,
         }
 
 
         if cmd_fun_name in cmd_fun_dict.keys():
-            return cmd_fun_dict[cmd_fun_name](f"{cmd_class_name} {''}")
-
+            if cmd_fun_name == "update":
+                param_id = splitted_params[0]
+                update_key = splitted_params[1]
+                update_value = splitted_params[2]
+                return cmd_fun_dict[cmd_fun_name]("{} {} {} {}".format(class_name,
+                                                                 param_id,
+                                                                 update_key,
+                                                                 update_value))
+            else:
+                return cmd_fun_dict[cmd_fun_name](f"{class_name} {param}")
 
         print(f"*** Unknown syntax: {args}")
         return False
