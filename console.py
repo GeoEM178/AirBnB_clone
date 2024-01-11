@@ -56,10 +56,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             created_instance = eval(f"{command_args[0]}()")
-            # if command_args[0] == "BaseModel":
-            #     created_instance = BaseModel()
-            # if command_args[0] == "User":
-            #     created_instance = User()
 
             storage.save()
             print(created_instance.id)
@@ -161,6 +157,41 @@ class HBNBCommand(cmd.Cmd):
                     pass
                 setattr(updated_obj, attr_key, attr_value)
                 updated_obj.save()
+
+    def default(self, args):
+        """_summary_
+
+        Args:
+            line (str): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        arguments = args.split('.')
+        cmd_class_name = arguments[0]
+
+        cmd_fun = arguments[1].split('(')
+        cmd_fun_name = cmd_fun[0]
+
+        if cmd_fun[1] != ")":
+            return print(f"*** Unknown syntax: {args}")
+
+        cmd_fun_dict = {
+            'all': self.do_all,
+            'show': self.do_show,
+            'destroy': self.do_destroy,
+            'update': self.do_update,
+            'create': self.do_create,
+            # 'count': self.do_count,
+        }
+
+
+        if cmd_fun_name in cmd_fun_dict.keys():
+            return cmd_fun_dict[cmd_fun_name](f"{cmd_class_name} {''}")
+
+
+        print(f"*** Unknown syntax: {args}")
+        return False
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
