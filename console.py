@@ -3,6 +3,8 @@
 """
 import cmd
 import shlex
+import re
+import ast
 import models
 from models import storage
 from models.base_model import BaseModel
@@ -12,6 +14,36 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+
+def split_dict(param):
+    """_summary_
+
+    Args:
+    param : dictionary
+
+    Returns:
+        _type_: _description_
+    """
+    dict_braces = re.search(r"\{(.*?)\}", param)
+    if dict_braces:
+        splitted_id = shlex.split(param[:dict_braces.span()[0]])
+        id = [i.strip(",") for i in splitted_id][0]
+        str_dict = dict_braces.group(1)
+        try:
+            dict_arg = ast.literal_eval("{" + str_dict + "}")
+        except Exception:
+            print(f"*** Unknown syntax: {dict_arg}")
+            return
+        return id, dict_arg
+    else: 
+        cmd_args = param.split(",")
+        try:
+            param_id = cmd_args[0]
+            param_key = cmd_args[1]
+            param_value = cmd_args[2]
+            return f"{param_id}", f"{param_key} {param_value}"
+        except Exception:
+            print(f"*** Unknown syntax: {dict_arg}")
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -151,14 +183,36 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
             else:
                 updated_obj = all_objects[key]
-                attr_key = command_args[2]
-                attr_value = command_args[3]
 
-                try:
-                    attr_value = eval(attr_value)
-                except Exception:
-                    pass
-                setattr(updated_obj, attr_key, attr_value)
+                bass_dict = re.search(r"\{(.*?)\}", args)
+                if bass_dict:
+                    str_dict = bass_dict.group(1)
+                    try:
+                        dict_arg = ast.literal_eval("{" + str_dict + "}")
+                    except Exception:
+                        print(f"*** Unknown syntax: {dict_arg}")
+                    
+                    dict_keys = list(dict_arg.keys())
+                    dict_values = list(dict_arg.values())
+
+                    dict_keys1 = dict_keys[0]
+                    dict_keys2 = dict_keys[1]
+                    dict_values1 = dict_values[0]
+                    dict_values2 = dict_values[1]
+
+                    setattr(updated_obj, dict_keys1, dict_values1)
+                    setattr(updated_obj, dict_keys2, dict_values2)
+
+                else:
+                    attr_key = command_args[2]
+                    attr_value = command_args[3]
+
+                    try:
+                        attr_value = eval(attr_value)
+                    except Exception:
+                        pass
+                    setattr(updated_obj, attr_key, attr_value)
+                
                 updated_obj.save()
 
     def do_count(self, args):
@@ -196,7 +250,9 @@ class HBNBCommand(cmd.Cmd):
         cmd_fun_name = cmd_fun[0]
 
         param = cmd_fun[1].split(')')[0]
-        splitted_params= param.split(',')
+        # splitted_params= param.split(',')
+
+
 
         cmd_fun_dict = {
             'all': self.do_all,
@@ -210,15 +266,23 @@ class HBNBCommand(cmd.Cmd):
 
         if cmd_fun_name in cmd_fun_dict.keys():
             if cmd_fun_name == "update":
-                param_id = splitted_params[0]
-                update_key = splitted_params[1]
-                update_value = splitted_params[2]
-                return cmd_fun_dict[cmd_fun_name]("{} {} {} {}".format(class_name,
+                # param_id = splitted_params[0]
+                # update_key = splitted_params[1]
+                # update_value = splitted_params[2]
+                param_id, dict_arg = split_dict(param)
+                try:
+                    if isinstance(dict_arg, str):
+                        attrs = dict_arg
+                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name,
                                                                  param_id,
-                                                                 update_key,
-                                                                 update_value))
+                                                                 attrs))
+                    elif isinstance(dict_arg, dict):
+                        dict_attr = dict_arg
+                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name, param_id, dict_attr))
+                except Exception:
+                    print(f"*** Unknown syntax: {dict_arg}")
             else:
-                return cmd_fun_dict[cmd_fun_name](f"{class_name} {param}")
+                return cmd_fun_dict[cmd_fun_name]("{} {}".format(class_name, param))
 
         print(f"*** Unknown syntax: {args}")
         return False
