@@ -64,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
-    def do_quit(self):
+    def do_quit(self, arg):
         """_summary_
 
         Args:
