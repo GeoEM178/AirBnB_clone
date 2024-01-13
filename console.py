@@ -180,7 +180,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """Update the class object
-        """      
+        """
         command_args = shlex.split(args)
         if len(command_args) == 0:
             print("** class name missing **")
