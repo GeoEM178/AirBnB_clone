@@ -64,15 +64,21 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
-    def do_quit(self, arg):
-        """
+    def do_quit(self):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
         """
         return True
 
-    def help_quit(self, arg):
+    def help_quit(self):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
         """
-        """
-        print("Quit to exit")
+        print("Quit command to exit the program")
     
     def do_create(self, args):
         """_summary_
