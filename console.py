@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
         Args:
             arg (_type_): _description_
         """
-        print("Quit command to exit the program")
+        print("Quit command to exit the program \n")
     
     def do_create(self, args):
         """_summary_
