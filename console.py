@@ -5,6 +5,7 @@ import cmd
 import shlex
 import re
 import ast
+import sys
 import models
 from models import storage
 from models.base_model import BaseModel
@@ -57,17 +58,33 @@ class HBNBCommand(cmd.Cmd):
         """
         Just pass, Do nothing
         """
-        pass
+        if not sys.stdin.isatty():
+            print()
 
     def do_EOF(self, arg):
         """EOF to exit the process
         """
+        if not sys.stdin.isatty():
+            print()
         return True
 
     def do_quit(self, arg):
         """Quit command to exit the program
         """
+        if not sys.stdin.isatty():
+            print()
+
         return True
+    
+    def do_help(self, arg):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
+        """
+        if not sys.stdin.isatty():
+            print()
+        cmd.Cmd.do_help(self, arg)
 
     # def help_quit(self, arg):
     #     """
