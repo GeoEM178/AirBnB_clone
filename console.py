@@ -244,16 +244,15 @@ class HBNBCommand(cmd.Cmd):
         """
         arguments = args.split('.')
         class_name = arguments[0]
+        cnm = class_name
 
-        cmd_fun = arguments[1].split('(')
-        cmd_fun_name = cmd_fun[0]
+        # cf = cmd_fun  just for pycodestyle
+        cf = arguments[1].split('(')
+        cf_name = cf[0]
 
-        param = cmd_fun[1].split(')')[0]
-        # splitted_params= param.split(',')
+        param = cf[1].split(')')[0]
 
-
-
-        cmd_fun_dict = {
+        cf_dict = {
             'all': self.do_all,
             'show': self.do_show,
             'destroy': self.do_destroy,
@@ -262,26 +261,20 @@ class HBNBCommand(cmd.Cmd):
             'count': self.do_count,
         }
 
-
-        if cmd_fun_name in cmd_fun_dict.keys():
-            if cmd_fun_name == "update":
-                # param_id = splitted_params[0]
-                # update_key = splitted_params[1]
-                # update_value = splitted_params[2]
+        if cf_name in cf_dict.keys():
+            if cf_name == "update":
                 param_id, dict_arg = split_dict(param)
                 try:
                     if isinstance(dict_arg, str):
                         attrs = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name,
-                                                                 param_id,
-                                                                 attrs))
+                        return cf_dict[cf_name](f"{cnm} {param_id} {attrs}")
                     elif isinstance(dict_arg, dict):
-                        dict_attr = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name, param_id, dict_attr))
+                        da = dict_arg
+                        return cf_dict[cf_name](f"{cnm} {param_id} {da}")
                 except Exception:
                     print(f"*** Unknown syntax: {dict_arg}")
             else:
-                return cmd_fun_dict[cmd_fun_name]("{} {}".format(class_name, param))
+                return cf_dict[cf_name]("{} {}".format(cnm, param))
 
         print(f"*** Unknown syntax: {args}")
         return False
