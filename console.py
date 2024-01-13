@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             print()
 
         return True
-    
+
     def do_help(self, arg):
         """_summary_
 
@@ -90,7 +90,7 @@ class HBNBCommand(cmd.Cmd):
     #     """
     #     """
     #     print("Quit to exit")
-    
+
     def do_create(self, args):
         """_summary_
 
@@ -98,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
             arg (_type_): _description_
         """
         command_args = shlex.split(args)
-        
+
         if len(command_args) == 0:
             print("** class name missing **")
         elif command_args[0] not in self.cls:
@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             arg (_type_): _description_
         """
         command_args = shlex.split(args)
-        
+
         if len(command_args) == 0:
             print("** class name missing **")
         elif command_args[0] not in self.cls:
@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             arg (_type_): _description_
         """
         command_args = shlex.split(args)
-        
+
         if len(command_args) == 0:
             print("** class name missing **")
         elif command_args[0] not in self.cls:
@@ -180,7 +180,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """Update the class object
-        """        
+        """      
         command_args = shlex.split(args)
         if len(command_args) == 0:
             print("** class name missing **")
@@ -208,7 +208,7 @@ class HBNBCommand(cmd.Cmd):
                         dict_arg = ast.literal_eval("{" + str_dict + "}")
                     except Exception:
                         print(f"*** Unknown syntax: {dict_arg}")
-                    
+
                     dict_keys = list(dict_arg.keys())
                     dict_values = list(dict_arg.values())
 
@@ -229,7 +229,7 @@ class HBNBCommand(cmd.Cmd):
                     except Exception:
                         pass
                     setattr(updated_obj, attr_key, attr_value)
-                
+
                 updated_obj.save()
 
     def do_count(self, args):
@@ -296,6 +296,7 @@ class HBNBCommand(cmd.Cmd):
 
         print(f"*** Unknown syntax: {args}")
         return False
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
