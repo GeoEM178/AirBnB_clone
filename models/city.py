@@ -5,6 +5,7 @@ This is the "city model" module.
 """
 from models.base_model import BaseModel
 
+
 class City(BaseModel):
     """City extending the BaseModel
     that represent different city of an object.
