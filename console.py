@@ -15,6 +15,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 def split_dict(param):
     """_summary_
 
@@ -35,7 +36,7 @@ def split_dict(param):
             print(f"*** Unknown syntax: {dict_arg}")
             return
         return id, dict_arg
-    else: 
+    else:
         cmd_args = param.split(",")
         try:
             param_id = cmd_args[0]
@@ -45,12 +46,12 @@ def split_dict(param):
         except Exception:
             print(f"*** Unknown syntax: {dict_arg}")
 
+
 class HBNBCommand(cmd.Cmd):
+    """Class that extend from cmd
     """
-    """
-    prompt = "(hbnb)"
-    existing_class = ["BaseModel", "User", "State",
-                       "City", "Amenity", "Place", "Review"]
+    prompt = "(hbnb) "
+    cls = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def emptyline(self):
         """
@@ -83,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
         
         if len(command_args) == 0:
             print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
+        elif command_args[0] not in self.cls:
             print("** class doesn't exist **")
         else:
             try:
@@ -104,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
         
         if len(command_args) == 0:
             print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
+        elif command_args[0] not in self.cls:
             print("** class doesn't exist **")
         elif len(command_args) < 2:
             print("** instance id missing **")
@@ -127,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
         
         if len(command_args) == 0:
             print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
+        elif command_args[0] not in self.cls:
             print("** class doesn't exist **")
         elif len(command_args) < 2:
             print("** instance id missing **")
@@ -153,7 +154,7 @@ class HBNBCommand(cmd.Cmd):
         if len(command_args) == 0:
             for key, value in all_objects.items():
                 print(str(value))
-        elif command_args[0] not in self.existing_class:
+        elif command_args[0] not in self.cls:
             print("** class doesn't exist **")
         else:
             for key, value in all_objects.items():
@@ -166,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
         command_args = shlex.split(args)
         if len(command_args) == 0:
             print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
+        elif command_args[0] not in self.cls:
             print("** class doesn't exist **")
         elif len(command_args) < 2:
             print("** instance id missing **")
@@ -223,7 +224,7 @@ class HBNBCommand(cmd.Cmd):
         command_args = shlex.split(args)
         if len(command_args) == 0:
             print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
+        elif command_args[0] not in self.cls:
             print("** class doesn't exist **")
         else:
             all_objects = storage.all()
