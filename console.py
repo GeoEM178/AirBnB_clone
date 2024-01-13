@@ -59,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_EOF(self, arg):
-        """
+        """EOF to exit the process
         """
         return True
 
@@ -161,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
                     print(str(value))
 
     def do_update(self, args):
-        """
+        """Update the class object
         """        
         command_args = shlex.split(args)
         if len(command_args) == 0:
