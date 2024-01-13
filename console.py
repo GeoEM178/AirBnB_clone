@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 """
 import cmd
@@ -15,7 +14,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-
 
 def split_dict(param):
     """_summary_
@@ -37,7 +35,7 @@ def split_dict(param):
             print(f"*** Unknown syntax: {dict_arg}")
             return
         return id, dict_arg
-    else:
+    else: 
         cmd_args = param.split(",")
         try:
             param_id = cmd_args[0]
@@ -47,13 +45,12 @@ def split_dict(param):
         except Exception:
             print(f"*** Unknown syntax: {dict_arg}")
 
-
 class HBNBCommand(cmd.Cmd):
-    """Console class"""
-
+    """
+    """
     prompt = "(hbnb)"
-    existing_class = ["BaseModel", "User", "State", "City", "Amenity",
-                             "Place", "Review"]
+    existing_class = ["BaseModel", "User", "State",
+                       "City", "Amenity", "Place", "Review"]
 
     def emptyline(self):
         """
@@ -63,29 +60,28 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """
-        End operation by typing EOF or Ctrl+d
         """
         print()
         return True
 
     def do_quit(self, arg):
         """
-        Quit console by typing 'quit'
         """
         return True
 
     def help_quit(self, arg):
         """
-        Help command
         """
         print("Quit to exit")
-
+    
     def do_create(self, args):
-        """
-        Create a new instance command
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
         """
         command_args = shlex.split(args)
-
+        
         if len(command_args) == 0:
             print("** class name missing **")
         elif command_args[0] not in self.existing_class:
@@ -100,12 +96,13 @@ class HBNBCommand(cmd.Cmd):
             print(created_instance.id)
 
     def do_show(self, args):
-        """
-        Print the string representation
-        of object based on the class name
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
         """
         command_args = shlex.split(args)
-
+        
         if len(command_args) == 0:
             print("** class name missing **")
         elif command_args[0] not in self.existing_class:
@@ -122,11 +119,13 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, args):
-        """
-        Destroy command to delete an object based on class and id
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
         """
         command_args = shlex.split(args)
-
+        
         if len(command_args) == 0:
             print("** class name missing **")
         elif command_args[0] not in self.existing_class:
@@ -144,9 +143,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, args):
-        """
-        Prints all string representation of all instances
-        based or not on the class name
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
         """
         all_objects = storage.all()
         command_args = shlex.split(args)
@@ -163,9 +163,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """
-        Update command to update an instance based on
-        the class name and id by adding or updating attribute
-        """
+        """        
         command_args = shlex.split(args)
         if len(command_args) == 0:
             print("** class name missing **")
@@ -193,7 +191,7 @@ class HBNBCommand(cmd.Cmd):
                         dict_arg = ast.literal_eval("{" + str_dict + "}")
                     except Exception:
                         print(f"*** Unknown syntax: {dict_arg}")
-
+                    
                     dict_keys = list(dict_arg.keys())
                     dict_values = list(dict_arg.values())
 
@@ -214,12 +212,14 @@ class HBNBCommand(cmd.Cmd):
                     except Exception:
                         pass
                     setattr(updated_obj, attr_key, attr_value)
-
-                    updated_obj.save()
+                
+                updated_obj.save()
 
     def do_count(self, args):
-        """
-        Prints count of instances of a class
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
         """
         command_args = shlex.split(args)
         if len(command_args) == 0:
@@ -235,8 +235,13 @@ class HBNBCommand(cmd.Cmd):
             print(count)
 
     def default(self, args):
-        """
-        Default console operation
+        """_summary_
+
+        Args:
+            line (str): _description_
+
+        Returns:
+            _type_: _description_
         """
         arguments = args.split('.')
         class_name = arguments[0]
@@ -247,6 +252,8 @@ class HBNBCommand(cmd.Cmd):
         param = cmd_fun[1].split(')')[0]
         # splitted_params= param.split(',')
 
+
+
         cmd_fun_dict = {
             'all': self.do_all,
             'show': self.do_show,
@@ -255,6 +262,7 @@ class HBNBCommand(cmd.Cmd):
             'create': self.do_create,
             'count': self.do_count,
         }
+
 
         if cmd_fun_name in cmd_fun_dict.keys():
             if cmd_fun_name == "update":
@@ -265,21 +273,19 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     if isinstance(dict_arg, str):
                         attrs = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]
-                        ("{} {} {}".format(class_name, param_id, attrs))
+                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name,
+                                                                 param_id,
+                                                                 attrs))
                     elif isinstance(dict_arg, dict):
                         dict_attr = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]
-                        ("{} {} {}".format(class_name, param_id, dict_attr))
+                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name, param_id, dict_attr))
                 except Exception:
                     print(f"*** Unknown syntax: {dict_arg}")
             else:
-                return cmd_fun_dict[cmd_fun_name]
-                ("{} {}".format(class_name, param))
+                return cmd_fun_dict[cmd_fun_name]("{} {}".format(class_name, param))
 
         print(f"*** Unknown syntax: {args}")
         return False
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
