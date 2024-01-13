@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import unittest
 from io import StringIO
 from unittest.mock import patch
@@ -48,3 +49,7 @@ class TestConsole(unittest.TestCase):
             output = fake_out.getvalue().strip()
     
         self.assertEqual(output, expected_output)
+
+
+if __name__ == "__main__":
+    unittest.main()
