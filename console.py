@@ -265,14 +265,17 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     if isinstance(dict_arg, str):
                         attrs = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name, param_id, attrs))
+                        return cmd_fun_dict[cmd_fun_name]
+                        ("{} {} {}".format(class_name, param_id, attrs))
                     elif isinstance(dict_arg, dict):
                         dict_attr = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name, param_id, dict_attr))
+                        return cmd_fun_dict[cmd_fun_name]
+                        ("{} {} {}".format(class_name, param_id, dict_attr))
                 except Exception:
                     print(f"*** Unknown syntax: {dict_arg}")
             else:
-                return cmd_fun_dict[cmd_fun_name]("{} {}".format(class_name, param))
+                return cmd_fun_dict[cmd_fun_name]
+                ("{} {}".format(class_name, param))
 
         print(f"*** Unknown syntax: {args}")
         return False
