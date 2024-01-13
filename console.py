@@ -15,42 +15,44 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-def split_dict(param):
+
+def aflos(khr):
     """_summary_
 
     Args:
-    param : dictionary
+    khr : dictionary
 
     Returns:
         _type_: _description_
     """
-    dict_braces = re.search(r"\{(.*?)\}", param)
-    if dict_braces:
-        splitted_id = shlex.split(param[:dict_braces.span()[0]])
-        id = [i.strip(",") for i in splitted_id][0]
-        str_dict = dict_braces.group(1)
+    kws_kmos = re.search(r"\{(.*?)\}", khr)
+    if kws_kmos:
+        mflaa = shlex.split(khr[:kws_kmos.span()[0]])
+        id = [i.strip(",") for i in mflaa][0]
+        kms_hrf = kws_kmos.group(1)
         try:
-            dict_arg = ast.literal_eval("{" + str_dict + "}")
+            ks_hgt = ast.literal_eval("{" + kms_hrf + "}")
         except Exception:
-            print(f"*** Unknown syntax: {dict_arg}")
+            print(f"*** Unknown syntax: {ks_hgt}")
             return
-        return id, dict_arg
-    else: 
-        cmd_args = param.split(",")
+        return id, ks_hgt
+    else:
+        am_gq = khr.split(",")
         try:
-            param_id = cmd_args[0]
-            param_key = cmd_args[1]
-            param_value = cmd_args[2]
-            return f"{param_id}", f"{param_key} {param_value}"
+            r_id = am_gq[0]
+            khr_key = am_gq[1]
+            khr_value = am_gq[2]
+            return f"{r_id}", f"{khr_key} {khr_value}"
         except Exception:
-            print(f"*** Unknown syntax: {dict_arg}")
+            print(f"*** Unknown syntax: {ks_hgt}")
+
 
 class HBNBCommand(cmd.Cmd):
     """
     """
     prompt = "(hbnb)"
-    existing_class = ["BaseModel", "User", "State",
-                       "City", "Amenity", "Place", "Review"]
+    mawgood = ["BaseModel", "User", "State",
+               "City", "Amenity", "Place", "Review"]
 
     def emptyline(self):
         """
@@ -73,166 +75,6 @@ class HBNBCommand(cmd.Cmd):
         """
         """
         print("Quit to exit")
-    
-    def do_create(self, args):
-        """_summary_
-
-        Args:
-            arg (_type_): _description_
-        """
-        command_args = shlex.split(args)
-        
-        if len(command_args) == 0:
-            print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
-            print("** class doesn't exist **")
-        else:
-            try:
-                created_instance = eval(f"{command_args[0]}()")
-            except Exception:
-                pass
-
-            storage.save()
-            print(created_instance.id)
-
-    def do_show(self, args):
-        """_summary_
-
-        Args:
-            arg (_type_): _description_
-        """
-        command_args = shlex.split(args)
-        
-        if len(command_args) == 0:
-            print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
-            print("** class doesn't exist **")
-        elif len(command_args) < 2:
-            print("** instance id missing **")
-        else:
-            all_objects = storage.all()
-            key = "{}.{}".format(command_args[0], command_args[1])
-
-            if key in all_objects:
-                print(all_objects[key])
-            else:
-                print("** no instance found **")
-
-    def do_destroy(self, args):
-        """_summary_
-
-        Args:
-            arg (_type_): _description_
-        """
-        command_args = shlex.split(args)
-        
-        if len(command_args) == 0:
-            print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
-            print("** class doesn't exist **")
-        elif len(command_args) < 2:
-            print("** instance id missing **")
-        else:
-            all_objects = storage.all()
-            key = "{}.{}".format(command_args[0], command_args[1])
-
-            if key in all_objects:
-                del all_objects[key]
-                storage.save()
-            else:
-                print("** no instance found **")
-
-    def do_all(self, args):
-        """_summary_
-
-        Args:
-            arg (_type_): _description_
-        """
-        all_objects = storage.all()
-        command_args = shlex.split(args)
-
-        if len(command_args) == 0:
-            for key, value in all_objects.items():
-                print(str(value))
-        elif command_args[0] not in self.existing_class:
-            print("** class doesn't exist **")
-        else:
-            for key, value in all_objects.items():
-                if key.split('.')[0] == command_args[0]:
-                    print(str(value))
-
-    def do_update(self, args):
-        """
-        """        
-        command_args = shlex.split(args)
-        if len(command_args) == 0:
-            print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
-            print("** class doesn't exist **")
-        elif len(command_args) < 2:
-            print("** instance id missing **")
-        else:
-            all_objects = storage.all()
-            key = "{}.{}".format(command_args[0], command_args[1])
-
-            if key not in all_objects:
-                print("** no instance found **")
-            elif len(command_args) < 3:
-                print("** attribute name missing **")
-            elif len(command_args) < 4:
-                print("** value missing **")
-            else:
-                updated_obj = all_objects[key]
-
-                bass_dict = re.search(r"\{(.*?)\}", args)
-                if bass_dict:
-                    str_dict = bass_dict.group(1)
-                    try:
-                        dict_arg = ast.literal_eval("{" + str_dict + "}")
-                    except Exception:
-                        print(f"*** Unknown syntax: {dict_arg}")
-                    
-                    dict_keys = list(dict_arg.keys())
-                    dict_values = list(dict_arg.values())
-
-                    dict_keys1 = dict_keys[0]
-                    dict_keys2 = dict_keys[1]
-                    dict_values1 = dict_values[0]
-                    dict_values2 = dict_values[1]
-
-                    setattr(updated_obj, dict_keys1, dict_values1)
-                    setattr(updated_obj, dict_keys2, dict_values2)
-
-                else:
-                    attr_key = command_args[2]
-                    attr_value = command_args[3]
-
-                    try:
-                        attr_value = eval(attr_value)
-                    except Exception:
-                        pass
-                    setattr(updated_obj, attr_key, attr_value)
-                
-                updated_obj.save()
-
-    def do_count(self, args):
-        """_summary_
-
-        Args:
-            arg (_type_): _description_
-        """
-        command_args = shlex.split(args)
-        if len(command_args) == 0:
-            print("** class name missing **")
-        elif command_args[0] not in self.existing_class:
-            print("** class doesn't exist **")
-        else:
-            all_objects = storage.all()
-            count = 0
-            for key, value in all_objects.items():
-                if key.split('.')[0] == command_args[0]:
-                    count += 1
-            print(count)
 
     def default(self, args):
         """_summary_
@@ -244,17 +86,15 @@ class HBNBCommand(cmd.Cmd):
             _type_: _description_
         """
         arguments = args.split('.')
-        class_name = arguments[0]
+        cdfn = arguments[0]
 
         cmd_fun = arguments[1].split('(')
-        cmd_fun_name = cmd_fun[0]
+        cfdn = cmd_fun[0]
 
-        param = cmd_fun[1].split(')')[0]
-        # splitted_params= param.split(',')
+        khr = cmd_fun[1].split(')')[0]
+        # splitted_khrs= khr.split(',')
 
-
-
-        cmd_fun_dict = {
+        cfd = {
             'all': self.do_all,
             'show': self.do_show,
             'destroy': self.do_destroy,
@@ -263,29 +103,187 @@ class HBNBCommand(cmd.Cmd):
             'count': self.do_count,
         }
 
-
-        if cmd_fun_name in cmd_fun_dict.keys():
-            if cmd_fun_name == "update":
-                # param_id = splitted_params[0]
-                # update_key = splitted_params[1]
-                # update_value = splitted_params[2]
-                param_id, dict_arg = split_dict(param)
+        if cfdn in cfd.keys():
+            if cfdn == "update":
+                # r_id = splitted_khrs[0]
+                # update_key = splitted_khrs[1]
+                # update_value = splitted_khrs[2]
+                r_id, ks_hgt = aflos(khr)
                 try:
-                    if isinstance(dict_arg, str):
-                        attrs = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name,
-                                                                 param_id,
-                                                                 attrs))
-                    elif isinstance(dict_arg, dict):
-                        dict_attr = dict_arg
-                        return cmd_fun_dict[cmd_fun_name]("{} {} {}".format(class_name, param_id, dict_attr))
+                    if isinstance(ks_hgt, str):
+                        attrs = ks_hgt
+                        return cfd[cfdn]("{} {} {}".format(cdfn, r_id, attrs))
+                    elif isinstance(ks_hgt, dict):
+                        dar = ks_hgt
+                        return cfd[cfdn]("{} {} {}".format(cdfn, r_id, dar))
                 except Exception:
-                    print(f"*** Unknown syntax: {dict_arg}")
+                    print(f"*** Unknown syntax: {ks_hgt}")
             else:
-                return cmd_fun_dict[cmd_fun_name]("{} {}".format(class_name, param))
+                return cfd[cfdn]("{} {}".format(cdfn, khr))
 
         print(f"*** Unknown syntax: {args}")
         return False
+
+    def do_create(self, args):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
+        """
+        awmr = shlex.split(args)
+
+        if len(awmr) == 0:
+            print("** class name missing **")
+        elif awmr[0] not in self.mawgood:
+            print("** class doesn't exist **")
+        else:
+            try:
+                monsheea = eval(f"{awmr[0]}()")
+            except Exception:
+                pass
+
+            storage.save()
+            print(monsheea.id)
+
+    def do_all(self, args):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
+        """
+        kol_hgrq = storage.all()
+        awmr = shlex.split(args)
+
+        if len(awmr) == 0:
+            for key, value in kol_hgrq.items():
+                print(str(value))
+        elif awmr[0] not in self.mawgood:
+            print("** class doesn't exist **")
+        else:
+            for key, value in kol_hgrq.items():
+                if key.split('.')[0] == awmr[0]:
+                    print(str(value))
+
+    def do_show(self, args):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
+        """
+        awmr = shlex.split(args)
+
+        if len(awmr) == 0:
+            print("** class name missing **")
+        elif awmr[0] not in self.mawgood:
+            print("** class doesn't exist **")
+        elif len(awmr) < 2:
+            print("** instance id missing **")
+        else:
+            kol_hgrq = storage.all()
+            key = "{}.{}".format(awmr[0], awmr[1])
+
+            if key in kol_hgrq:
+                print(kol_hgrq[key])
+            else:
+                print("** no instance found **")
+
+    def do_destroy(self, args):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
+        """
+        awmr = shlex.split(args)
+
+        if len(awmr) == 0:
+            print("** class name missing **")
+        elif awmr[0] not in self.mawgood:
+            print("** class doesn't exist **")
+        elif len(awmr) < 2:
+            print("** instance id missing **")
+        else:
+            kol_hgrq = storage.all()
+            key = "{}.{}".format(awmr[0], awmr[1])
+
+            if key in kol_hgrq:
+                del kol_hgrq[key]
+                storage.save()
+            else:
+                print("** no instance found **")
+
+    def do_update(self, args):
+        """
+        """
+        awmr = shlex.split(args)
+        if len(awmr) == 0:
+            print("** class name missing **")
+        elif awmr[0] not in self.mawgood:
+            print("** class doesn't exist **")
+        elif len(awmr) < 2:
+            print("** instance id missing **")
+        else:
+            kol_hgrq = storage.all()
+            key = "{}.{}".format(awmr[0], awmr[1])
+
+            if key not in kol_hgrq:
+                print("** no instance found **")
+            elif len(awmr) < 3:
+                print("** attribute name missing **")
+            elif len(awmr) < 4:
+                print("** value missing **")
+            else:
+                updated_obj = kol_hgrq[key]
+
+                bass_dict = re.search(r"\{(.*?)\}", args)
+                if bass_dict:
+                    kms_hrf = bass_dict.group(1)
+                    try:
+                        ks_hgt = ast.literal_eval("{" + kms_hrf + "}")
+                    except Exception:
+                        print(f"*** Unknown syntax: {ks_hgt}")
+
+                    dict_keys = list(ks_hgt.keys())
+                    dict_values = list(ks_hgt.values())
+
+                    dict_keys1 = dict_keys[0]
+                    dict_keys2 = dict_keys[1]
+                    dict_values1 = dict_values[0]
+                    dict_values2 = dict_values[1]
+
+                    setattr(updated_obj, dict_keys1, dict_values1)
+                    setattr(updated_obj, dict_keys2, dict_values2)
+
+                else:
+                    attr_key = awmr[2]
+                    attr_value = awmr[3]
+
+                    try:
+                        attr_value = eval(attr_value)
+                    except Exception:
+                        pass
+                    setattr(updated_obj, attr_key, attr_value)
+
+                updated_obj.save()
+
+    def do_count(self, args):
+        """_summary_
+
+        Args:
+            arg (_type_): _description_
+        """
+        awmr = shlex.split(args)
+        if len(awmr) == 0:
+            print("** class name missing **")
+        elif awmr[0] not in self.mawgood:
+            print("** class doesn't exist **")
+        else:
+            kol_hgrq = storage.all()
+            count = 0
+            for key, value in kol_hgrq.items():
+                if key.split('.')[0] == awmr[0]:
+                    count += 1
+            print(count)
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
