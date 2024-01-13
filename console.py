@@ -215,7 +215,7 @@ class HBNBCommand(cmd.Cmd):
                         pass
                     setattr(updated_obj, attr_key, attr_value)
 
-                    updated_obj.save()
+                updated_obj.save()
 
     def do_count(self, args):
         """
