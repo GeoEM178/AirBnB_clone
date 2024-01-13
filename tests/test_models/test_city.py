@@ -6,7 +6,7 @@ from models.city import City
 
 
 
-class CityTest(unittest.TestCase):
+class TestCity(unittest.TestCase):
     def setUp(self):
         self.city = City()
 

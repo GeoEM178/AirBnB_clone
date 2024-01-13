@@ -6,7 +6,7 @@ from models.place import Place
 
 
 
-class PlaceTest(unittest.TestCase):
+class TestPlace(unittest.TestCase):
     def setUp(self):
         self.place = Place()
 
