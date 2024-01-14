@@ -71,7 +71,3 @@ class BaseModel:
         Returns string representation of the class and instance
         """
         return f"[{type(self).__name__}] ({self.id}) {str(self.__dict__)}"
-
-# TODO: For testing - will be deleted
-
-
