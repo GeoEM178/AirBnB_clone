@@ -69,7 +69,7 @@ class TestConsole(unittest.TestCase):
 
         self.assertEqual(output, expected_output)
 
-    def test_args_length(self):
+    def test_parms(self):
         """
         test if args length < 1 to print [** class name missing **]
         """
@@ -80,13 +80,13 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(expected, output.getvalue().strip())
 
 
-    def test_empty_line(self):
+    def test_new_cmd(self):
         """ Test handling empty lines """
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertEqual("", output.getvalue())
 
 
-    def test_errors(self):
+    def test_issues(self):
         """ test passing invalid id """
         invalid_id = 23421123
         with patch("sys.stdout", new=StringIO()) as output:
