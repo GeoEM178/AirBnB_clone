@@ -67,5 +67,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(my_model.created_at, datetime.utcnow())
         self.assertNotEqual(my_model.updated_at, datetime.utcnow())
 
+
 if __name__ == "__main__":
     unittest.main()
