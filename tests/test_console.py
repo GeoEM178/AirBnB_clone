@@ -17,7 +17,7 @@ class TestConsole(unittest.TestCase):
         Test destroy function
         """
         command = 'create User'
-        expected_output = '** no instance found **'
+        expected_promptt = '** no instance found **'
 
         with patch('sys.stdout', new=StringIO()) as fake_out:
             HBNBCommand().onecmd(command)
@@ -26,95 +26,95 @@ class TestConsole(unittest.TestCase):
 
         with patch('sys.stdout', new=StringIO()) as fake_out:
             HBNBCommand().onecmd(command)
-            output = fake_out.getvalue().strip()
+            promptt = fake_out.getvalue().strip()
 
-        self.assertEqual(output, expected_output)
+        self.assertEqual(promptt, expected_promptt)
 
     def test_show(self):
         """
         Test show function
         """
         command = 'show'
-        expected_output = '** class name missing **'
+        expected_promptt = '** class name missing **'
 
         with patch('sys.stdout', new=StringIO()) as fake_out:
             HBNBCommand().onecmd(command)
-            output = fake_out.getvalue().strip()
+            promptt = fake_out.getvalue().strip()
 
-        self.assertEqual(output, expected_output)
+        self.assertEqual(promptt, expected_promptt)
 
     def test_create_with_invalid_class_name(self):
         """
         Test create for invalid class name
         """
         command = 'create InvalidClass'
-        expected_output = '** class doesn\'t exist **'
+        expected_promptt = '** class doesn\'t exist **'
 
         with patch('sys.stdout', new=StringIO()) as fake_out:
             HBNBCommand().onecmd(command)
-            output = fake_out.getvalue().strip()
+            promptt = fake_out.getvalue().strip()
 
-        self.assertEqual(output, expected_output)
+        self.assertEqual(promptt, expected_promptt)
 
     def test_create_command_no_class_name(self):
         """
         Test create command with no class name
         """
         command = 'create'
-        expected_output = '** class name missing **'
+        expected_promptt = '** class name missing **'
 
         with patch('sys.stdout', new=StringIO()) as fake_out:
             HBNBCommand().onecmd(command)
-            output = fake_out.getvalue().strip()
+            promptt = fake_out.getvalue().strip()
 
-        self.assertEqual(output, expected_output)
+        self.assertEqual(promptt, expected_promptt)
 
     def test_parms(self):
         """
-        test if args length < 1 to print [** class name missing **]
+        test params for errorr
         """
-        with patch("sys.stdout", new=StringIO()) as output:
-            input = "create"
+        with patch("sys.stdout", new=StringIO()) as promptt:
+            inning = "create"
             expected = "** class name missing **"
-            HBNBCommand().onecmd(input)
-            self.assertEqual(expected, output.getvalue().strip())
+            HBNBCommand().onecmd(inning)
+            self.assertEqual(expected, promptt.getvalue().strip())
 
 
     def test_new_cmd(self):
-        """ Test handling empty lines """
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertEqual("", output.getvalue())
+        """ Test without commands or args """
+        with patch("sys.stdout", new=StringIO()) as promptt:
+            self.assertEqual("", promptt.getvalue())
 
 
     def test_issues(self):
-        """ test passing invalid id """
+        """ test uncorrect id or uuid """
         invalid_id = 23421123
-        with patch("sys.stdout", new=StringIO()) as output:
-            input = f'BaseModel.show("{invalid_id}")'
-            HBNBCommand().onecmd(input)  # excute command
-            res = "** no instance found **"
-            self.assertEqual(output.getvalue().strip(), res)
+        with patch("sys.stdout", new=StringIO()) as promptt:
+            inning = f'BaseModel.show("{invalid_id}")'
+            HBNBCommand().onecmd(inning)
+            rdd = "** no instance found **"
+            self.assertEqual(promptt.getvalue().strip(), rdd)
 
-        """ test passing no class """
-        with patch("sys.stdout", new=StringIO()) as output:
-            input = 'show'
-            HBNBCommand().onecmd(input)  # excute command
-            res = "** class name missing **"
-            self.assertEqual(output.getvalue().strip(), res)
+        """ test to un giv any knowen class """
+        with patch("sys.stdout", new=StringIO()) as promptt:
+            inning = 'show'
+            HBNBCommand().onecmd(inning)
+            rdd = "** class name missing **"
+            self.assertEqual(promptt.getvalue().strip(), rdd)
 
-        """ test passing incorrect class """
-        with patch("sys.stdout", new=StringIO()) as output:
-            input = 'places.show("232342")'
-            HBNBCommand().onecmd(input)  # excute command
-            res = "** class doesn't exist **"
-            self.assertEqual(output.getvalue().strip(), res)
+        """ test not an existing cls """
+        with patch("sys.stdout", new=StringIO()) as promptt:
+            inning = 'places.show("232342")'
+            HBNBCommand().onecmd(inning)
+            rdd = "** class doesn't exist **"
+            self.assertEqual(promptt.getvalue().strip(), rdd)
 
-        """ test passing not passing id """
-        with patch("sys.stdout", new=StringIO()) as output:
-            input = 'Place.show()'
-            HBNBCommand().onecmd(input)  # excute command
-            res = "** instance id missing **"
-            self.assertEqual(output.getvalue().strip(), res)
+        """ test smae as the last withopt """
+        with patch("sys.stdout", new=StringIO()) as promptt:
+            inning = 'Place.show()'
+            HBNBCommand().onecmd(inning)
+            rdd = "** instance id missing **"
+            self.assertEqual(promptt.getvalue().strip(), rdd)
 
 
 if __name__ == "__main__":
