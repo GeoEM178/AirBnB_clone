@@ -59,9 +59,11 @@ class TestBaseModel(unittest.TestCase):
         """
         Test the initialization with kwargs
         """
-        my_model = BaseModel(created_at="2019-07-01T00:00:00.000000", updated_at="2019-07-01T00:00:00.000000")
-        self.assertEqual(my_model.created_at, datetime.fromisoformat("2019-07-01T00:00:00.000000"))
-        self.assertEqual(my_model.updated_at, datetime.fromisoformat("2019-07-01T00:00:00.000000"))
+        format_date = "2019-07-01T00:00:00.000000"
+        iso_format = datetime.fromisoformat(format_date)
+        my_model = BaseModel(created_at=format_date, updated_at=format_date)
+        self.assertEqual(my_model.created_at, iso_format)
+        self.assertEqual(my_model.updated_at, iso_format)
         self.assertNotEqual(my_model.created_at, datetime.utcnow())
         self.assertNotEqual(my_model.updated_at, datetime.utcnow())
 
