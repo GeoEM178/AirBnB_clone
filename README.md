@@ -12,4 +12,4 @@ To start the command interpreter, you need to run the Python script that contain
 
 $ python3 console.py Welcome to the AirBnB clone command interpreter!
 
-How to use it:
+How to use it
