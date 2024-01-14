@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""_summary_
+
+Returns:
+    _type_: _description_
+"""
 import json
 import os
 import models
@@ -9,11 +14,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-"""_summary_
 
-Returns:
-    _type_: _description_
-"""
+
 class FileStorage:
     """_summary_
 
