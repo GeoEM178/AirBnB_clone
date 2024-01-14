@@ -5,7 +5,7 @@ Test cases for base class
 import unittest
 import uuid
 from models.base_model import BaseModel
-from models.amenity import Amenity 
+from models.amenity import Amenity
 
 
 class TestAmenity(unittest.TestCase):
@@ -49,7 +49,7 @@ class TestAmenity(unittest.TestCase):
 
     def test_for_id(self):
         """
-        Tests for id 
+        Tests for id
         """
         self.assertIsInstance(uuid.UUID(self.amenity.id), uuid.UUID)
 
