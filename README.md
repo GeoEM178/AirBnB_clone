@@ -1,3 +1,3 @@
 # AirBnB_clone
 
-CLI Proje
+CLI Pro
