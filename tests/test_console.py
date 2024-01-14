@@ -79,12 +79,10 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd(inning)
             self.assertEqual(expected, promptt.getvalue().strip())
 
-
     def test_new_cmd(self):
         """ Test without commands or args """
         with patch("sys.stdout", new=StringIO()) as promptt:
             self.assertEqual("", promptt.getvalue())
-
 
     def test_issues(self):
         """ test uncorrect id or uuid """
