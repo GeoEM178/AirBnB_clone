@@ -5,6 +5,7 @@ This is the "place model" module.
 """
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """A place model that extend from BaseModel
 

@@ -5,6 +5,7 @@ Review for places
 """
 from models.base_model import BaseModel
 
+
 class Review(BaseModel):
     """An review provided by a reviews for places
 
