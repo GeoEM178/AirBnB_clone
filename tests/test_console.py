@@ -69,6 +69,53 @@ class TestConsole(unittest.TestCase):
 
         self.assertEqual(output, expected_output)
 
+    def test_args_length(self):
+        """
+        test if args length < 1 to print [** class name missing **]
+        """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = "create"
+            expected = "** class name missing **"
+            HBNBCommand().onecmd(input)
+            self.assertEqual(expected, output.getvalue().strip())
+
+
+    def test_empty_line(self):
+        """ Test handling empty lines """
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertEqual("", output.getvalue())
+
+
+    def test_errors(self):
+        """ test passing invalid id """
+        invalid_id = 23421123
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = f'BaseModel.show("{invalid_id}")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** no instance found **"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        """ test passing no class """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'show'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** class name missing **"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        """ test passing incorrect class """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'places.show("232342")'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** class doesn't exist **"
+            self.assertEqual(output.getvalue().strip(), res)
+
+        """ test passing not passing id """
+        with patch("sys.stdout", new=StringIO()) as output:
+            input = 'Place.show()'
+            HBNBCommand().onecmd(input)  # excute command
+            res = "** instance id missing **"
+            self.assertEqual(output.getvalue().strip(), res)
+
 
 if __name__ == "__main__":
     unittest.main()
