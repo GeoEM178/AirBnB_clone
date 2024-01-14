@@ -5,8 +5,7 @@ Test cases for base class
 import unittest
 import uuid
 from models.base_model import BaseModel
-from models.city import City 
-
+from models.city import City
 
 
 class TestCity(unittest.TestCase):

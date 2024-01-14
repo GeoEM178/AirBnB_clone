@@ -5,8 +5,7 @@ Test cases for base class
 import unittest
 import uuid
 from models.base_model import BaseModel
-from models.place import Place 
-
+from models.place import Place
 
 
 class TestPlace(unittest.TestCase):

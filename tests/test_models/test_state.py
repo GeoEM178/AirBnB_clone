@@ -5,8 +5,7 @@ Test cases for base class
 import unittest
 import uuid
 from models.base_model import BaseModel
-from models.state import State 
-
+from models.state import State
 
 
 class TestState(unittest.TestCase):

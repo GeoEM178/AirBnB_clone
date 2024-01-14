@@ -5,8 +5,7 @@ Test cases for base class
 import unittest
 import uuid
 from models.base_model import BaseModel
-from models.review import Review 
-
+from models.review import Review
 
 
 class TestReview(unittest.TestCase):
