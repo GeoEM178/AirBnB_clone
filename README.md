@@ -9,5 +9,3 @@ The command interpreter is a program that allows users to interact with the AirB
 How to start it:
 
 To start the command interpreter, you need to run the Python script that contains the main logic for the interpreter. Typically, the script will be named something like "console.py" or "cmd.py."
-
-$ python3 console.py Welcome
