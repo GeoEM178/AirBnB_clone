@@ -1,11 +1,21 @@
 #!/usr/bin/python3
+"""
+Test console
+"""
 import unittest
 from io import StringIO
 from unittest.mock import patch
 from console import HBNBCommand
 
+
 class TestConsole(unittest.TestCase):
+    """
+    Test console
+    """
     def test_destroy(self):
+        """
+        Test destroy function
+        """
         command = 'create User'
         expected_output = '** no instance found **'
     
@@ -21,6 +31,9 @@ class TestConsole(unittest.TestCase):
         self.assertEqual(output, expected_output)
 
     def test_show(self):
+        """
+        Test show funtion
+        """
         command = 'show'
         expected_output = '** class name missing **'
     
@@ -31,6 +44,9 @@ class TestConsole(unittest.TestCase):
         self.assertEqual(output, expected_output)
 
     def test_create_with_invalid_class_name(self):
+        """
+        Test create for invalid class name
+        """
         command = 'create InvalidClass'
         expected_output = '** class doesn\'t exist **'
     
@@ -41,6 +57,9 @@ class TestConsole(unittest.TestCase):
         self.assertEqual(output, expected_output)
 
     def test_create_command_no_class_name(self):
+        """
+        Test create command with no class name
+        """
         command = 'create'
         expected_output = '** class name missing **'
     

@@ -8,6 +8,7 @@ from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
     """
+    Class to test base class
     """
 
     def test_initialization(self):
