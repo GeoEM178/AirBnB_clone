@@ -18,4 +18,4 @@ Once the command interpreter is running, it will display a prompt where users ca
 
 examples:
 
-$ python3 console.py Welcome to the AirBnB clone command interpreter! (hbnb) create User 135 (hbnb) update User 1235 name John (hbnb) show User 125 (hbnb) destroy Use
+$ python3 console.py Welcome to the AirBnB clone command interpreter! (hbnb) create User 135 (hbnb) update User 1235 name John (hbnb) show User 125 (hbnb) destroy Us
