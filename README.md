@@ -13,9 +13,3 @@ To start the command interpreter, you need to run the Python script that contain
 $ python3 console.py Welcome to the AirBnB clone command interpreter!
 
 How to use it:
-
-Once the command interpreter is running, it will display a prompt where users can enter commands to interact with the AirBnB objects. The commands are structured in a specific format, and users can use various commands to create, retrieve, update, and delete objects.
-
-examples:
-
-$ python3 console.py Welcome to the AirBnB clone command interpreter! (hbnb) create User 135 (hbnb) update User 1235 name John (hbnb) show User 125 (hbnb) destr
